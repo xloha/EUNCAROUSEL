@@ -8,14 +8,16 @@
 import UIKit
 
 class InsetCollectionViewController: UIViewController {
-
+    
     @IBOutlet weak var collectionView: UICollectionView!
     
     let cellSize = CGSize(width: 300, height: 200)
-    let minItemSpacing: CGFloat = 20
+    let minItemSpacing: CGFloat = 10
     var insetSpacing: CGFloat {
         return (collectionView.bounds.width - cellSize.width) / 2.0
     }
+    var previousIndex = 0
+    var isLoadedFirst = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +30,13 @@ class InsetCollectionViewController: UIViewController {
         collectionView.isPagingEnabled = false
     }
     
+    func animateZoomForCell(zoomCell: UICollectionViewCell) {
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: { zoomCell.transform = .identity }, completion: nil)
+    }
+    
+    func animateZoomForCellRemove(zoomCell: UICollectionViewCell) {
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: { zoomCell.transform = CGAffineTransform(scaleX: 0.8, y: 0.8) }, completion: nil)
+    }
 }
 
 extension InsetCollectionViewController: UICollectionViewDataSource {
@@ -40,6 +49,16 @@ extension InsetCollectionViewController: UICollectionViewDataSource {
         cell.imageView.image = UIImage(named: ColorImg.colorList[indexPath.row].img)
         
         return cell
+    }
+}
+
+extension InsetCollectionViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard !isLoadedFirst else {
+            isLoadedFirst = false
+            return
+        }
+        cell.transform = .init(scaleX: 0.8, y: 0.8)
     }
 }
 
@@ -59,7 +78,6 @@ extension InsetCollectionViewController: UICollectionViewDelegateFlowLayout {
 
 extension InsetCollectionViewController: UIScrollViewDelegate {
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        
         let cellWithSpacingWidth =  cellSize.width + minItemSpacing
         var offset = targetContentOffset.pointee
         let index = (offset.x + scrollView.contentInset.left) / cellWithSpacingWidth
@@ -67,5 +85,25 @@ extension InsetCollectionViewController: UIScrollViewDelegate {
 
         offset = CGPoint(x: roundedIndex * cellWithSpacingWidth - scrollView.contentInset.left, y: scrollView.contentInset.top)
         targetContentOffset.pointee = offset
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let cellWithSpacingWidth =  cellSize.width + minItemSpacing
+        let offsetX = collectionView.contentOffset.x
+        let index = (offsetX + scrollView.contentInset.left) / cellWithSpacingWidth
+        let roundedIndex = Int(round(index))
+        let indexPath = IndexPath(row: roundedIndex, section: 0)
+        
+        if let cell = collectionView.cellForItem(at: indexPath) {
+            animateZoomForCell(zoomCell: cell)
+        }
+        
+        if roundedIndex != previousIndex {
+            let preIndexPath = IndexPath(row: previousIndex, section: 0)
+            if let preCell = collectionView.cellForItem(at: preIndexPath) {
+                animateZoomForCellRemove(zoomCell: preCell)
+            }
+            previousIndex = indexPath.row
+        }
     }
 }
