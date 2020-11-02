@@ -154,19 +154,29 @@
                                     <outlet property="delegate" destination="5v8-5Q-Def" id="sVE-13-meR"/>
                                 </connections>
                             </collectionView>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="o5h-mh-nVQ">
+                                <rect key="frame" x="10" y="556" width="394" height="28"/>
+                                <color key="pageIndicatorTintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="currentPageIndicatorTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </pageControl>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="4Qo-xO-Oc3"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Drd-aW-LZL" firstAttribute="leading" secondItem="4Qo-xO-Oc3" secondAttribute="leading" id="Avm-6l-Dkv"/>
+                            <constraint firstItem="o5h-mh-nVQ" firstAttribute="leading" secondItem="4Qo-xO-Oc3" secondAttribute="leading" constant="10" id="QmH-WF-gT8"/>
+                            <constraint firstItem="o5h-mh-nVQ" firstAttribute="centerX" secondItem="fEu-Zg-Ml3" secondAttribute="centerX" id="RtF-A2-lSt"/>
                             <constraint firstItem="Drd-aW-LZL" firstAttribute="centerY" secondItem="fEu-Zg-Ml3" secondAttribute="centerY" id="bUw-lM-3tO"/>
                             <constraint firstItem="Drd-aW-LZL" firstAttribute="trailing" secondItem="4Qo-xO-Oc3" secondAttribute="trailing" id="bgO-XN-9R5"/>
                             <constraint firstItem="Drd-aW-LZL" firstAttribute="centerX" secondItem="fEu-Zg-Ml3" secondAttribute="centerX" id="f70-ZA-3ra"/>
+                            <constraint firstItem="o5h-mh-nVQ" firstAttribute="top" secondItem="Drd-aW-LZL" secondAttribute="bottom" constant="8" symbolic="YES" id="mIT-7s-6BJ"/>
+                            <constraint firstItem="4Qo-xO-Oc3" firstAttribute="trailing" secondItem="o5h-mh-nVQ" secondAttribute="trailing" constant="10" id="pqT-JR-bNR"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="JoA-ZL-CJh"/>
                     <connections>
                         <outlet property="collectionView" destination="Drd-aW-LZL" id="8kG-1P-AtG"/>
+                        <outlet property="pageControl" destination="o5h-mh-nVQ" id="8Ic-sx-ihN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xcm-kV-jqh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

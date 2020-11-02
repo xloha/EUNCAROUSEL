@@ -10,6 +10,7 @@ import UIKit
 class InsetCollectionViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var pageControl: UIPageControl!
     
     let cellSize = CGSize(width: 300, height: 200)
     let minItemSpacing: CGFloat = 10
@@ -17,11 +18,14 @@ class InsetCollectionViewController: UIViewController {
         return (collectionView.bounds.width - cellSize.width) / 2.0
     }
     var previousIndex = 0
-    var isLoadedFirst = true
+    var nextIndex = 1
+    let initialIndex = 3
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpCollectionView()
+        setUpPageControl()
+        setUpInitialPage()
     }
     
     func setUpCollectionView() {
@@ -37,6 +41,18 @@ class InsetCollectionViewController: UIViewController {
     func animateZoomForCellRemove(zoomCell: UICollectionViewCell) {
         UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: { zoomCell.transform = CGAffineTransform(scaleX: 0.8, y: 0.8) }, completion: nil)
     }
+
+    func setUpPageControl() {
+        pageControl.hidesForSinglePage = true
+        pageControl.numberOfPages = ColorImg.colorList.count
+    }
+    
+    func setUpInitialPage() {
+        let indexPath = IndexPath(row: initialIndex, section: 0)
+        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        pageControl.currentPage = indexPath.row
+    }
+    
 }
 
 extension InsetCollectionViewController: UICollectionViewDataSource {
@@ -54,11 +70,12 @@ extension InsetCollectionViewController: UICollectionViewDataSource {
 
 extension InsetCollectionViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        guard !isLoadedFirst else {
-            isLoadedFirst = false
-            return
+        if initialIndex > 0 && indexPath.row == initialIndex - 1 {
+            cell.transform = .init(scaleX: 0.8, y: 0.8)
         }
-        cell.transform = .init(scaleX: 0.8, y: 0.8)
+        if indexPath.row == nextIndex {
+            cell.transform = .init(scaleX: 0.8, y: 0.8)
+        }
     }
 }
 
@@ -82,6 +99,8 @@ extension InsetCollectionViewController: UIScrollViewDelegate {
         var offset = targetContentOffset.pointee
         let index = (offset.x + scrollView.contentInset.left) / cellWithSpacingWidth
         let roundedIndex: CGFloat = round(index)
+        
+        pageControl.currentPage = Int(roundedIndex)
 
         offset = CGPoint(x: roundedIndex * cellWithSpacingWidth - scrollView.contentInset.left, y: scrollView.contentInset.top)
         targetContentOffset.pointee = offset
@@ -102,6 +121,18 @@ extension InsetCollectionViewController: UIScrollViewDelegate {
             let preIndexPath = IndexPath(row: previousIndex, section: 0)
             if let preCell = collectionView.cellForItem(at: preIndexPath) {
                 animateZoomForCellRemove(zoomCell: preCell)
+            }
+            
+            if previousIndex < roundedIndex {
+                let nIndex = roundedIndex + 1
+                if nIndex < ColorImg.colorList.count {
+                    self.nextIndex = nIndex
+                }
+            } else {
+                let nIndex = roundedIndex - 1
+                if nIndex >= 0 {
+                    self.nextIndex = nIndex
+                }
             }
             previousIndex = indexPath.row
         }
