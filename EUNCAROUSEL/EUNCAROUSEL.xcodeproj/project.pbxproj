@@ -15,6 +15,7 @@
 		28023935254A48500013921C /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28023934254A48500013921C /* CollectionViewCell.swift */; };
 		2802393C254A4BBE0013921C /* InsetCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2802393B254A4BBE0013921C /* InsetCollectionViewController.swift */; };
 		2802393F254A4C2F0013921C /* ColorImg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2802393E254A4C2F0013921C /* ColorImg.swift */; };
+		28BCEA5825511EF500FD5892 /* BannerCarouselViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BCEA5725511EF500FD5892 /* BannerCarouselViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		28023934254A48500013921C /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		2802393B254A4BBE0013921C /* InsetCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsetCollectionViewController.swift; sourceTree = "<group>"; };
 		2802393E254A4C2F0013921C /* ColorImg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorImg.swift; sourceTree = "<group>"; };
+		28BCEA5725511EF500FD5892 /* BannerCarouselViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerCarouselViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,14 +62,15 @@
 		2802391B254A41C70013921C /* EUNCAROUSEL */ = {
 			isa = PBXGroup;
 			children = (
+				28BCEA4C2551114D00FD5892 /* bannerCarousel */,
 				28023932254A464D0013921C /* insetCarousel */,
 				2802391C254A41C70013921C /* AppDelegate.swift */,
 				2802391E254A41C70013921C /* SceneDelegate.swift */,
 				28023922254A41C70013921C /* Main.storyboard */,
+				28023934254A48500013921C /* CollectionViewCell.swift */,
 				28023925254A41C90013921C /* Assets.xcassets */,
 				28023927254A41C90013921C /* LaunchScreen.storyboard */,
 				2802392A254A41C90013921C /* Info.plist */,
-				28023934254A48500013921C /* CollectionViewCell.swift */,
 				2802393E254A4C2F0013921C /* ColorImg.swift */,
 			);
 			path = EUNCAROUSEL;
@@ -79,6 +82,14 @@
 				2802393B254A4BBE0013921C /* InsetCollectionViewController.swift */,
 			);
 			path = insetCarousel;
+			sourceTree = "<group>";
+		};
+		28BCEA4C2551114D00FD5892 /* bannerCarousel */ = {
+			isa = PBXGroup;
+			children = (
+				28BCEA5725511EF500FD5892 /* BannerCarouselViewController.swift */,
+			);
+			path = bannerCarousel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -156,6 +167,7 @@
 				2802391D254A41C70013921C /* AppDelegate.swift in Sources */,
 				2802391F254A41C70013921C /* SceneDelegate.swift in Sources */,
 				28023935254A48500013921C /* CollectionViewCell.swift in Sources */,
+				28BCEA5825511EF500FD5892 /* BannerCarouselViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
