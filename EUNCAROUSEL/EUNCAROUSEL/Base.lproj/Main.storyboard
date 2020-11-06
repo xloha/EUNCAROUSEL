@@ -77,6 +77,26 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="VLo-qu-rar">
+                                        <rect key="frame" x="0.0" y="158.5" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VLo-qu-rar" id="OeT-Es-JUa">
+                                            <rect key="frame" x="0.0" y="0.0" width="383" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="가운데가 강조되는 carousel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sVr-N2-lKM">
+                                                    <rect key="frame" x="20" y="11" width="191" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="XsZ-7D-RPT" kind="show" id="kAX-g7-seU"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -185,6 +205,61 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xcm-kV-jqh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-368" y="-125"/>
+        </scene>
+        <!--Center Carousel View Controller-->
+        <scene sceneID="BFt-P6-Ecm">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" modalTransitionStyle="flipHorizontal" id="XsZ-7D-RPT" customClass="CenterCarouselViewController" customModule="EUNCAROUSEL" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3a9-S6-76D">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="RE8-oP-TPh">
+                                <rect key="frame" x="-10" y="323" width="414" height="250"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="250" id="x3Z-Bv-c16"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="cIc-GV-r4P">
+                                    <size key="itemSize" width="128" height="200"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="centerCollectionViewCell" id="h8n-ZJ-UzN">
+                                        <rect key="frame" x="0.0" y="25" width="128" height="200"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="k8S-QK-EgJ">
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="200"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="XsZ-7D-RPT" id="S9l-xp-0R1"/>
+                                    <outlet property="delegate" destination="XsZ-7D-RPT" id="x8s-fc-xOe"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="ajN-q6-mRC"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="RE8-oP-TPh" firstAttribute="leading" secondItem="ajN-q6-mRC" secondAttribute="leading" id="3Zp-g6-d2P"/>
+                            <constraint firstItem="RE8-oP-TPh" firstAttribute="centerY" secondItem="3a9-S6-76D" secondAttribute="centerY" id="9Bo-0f-gpt"/>
+                            <constraint firstItem="ajN-q6-mRC" firstAttribute="trailing" secondItem="RE8-oP-TPh" secondAttribute="trailing" id="b8w-hh-K4k"/>
+                            <constraint firstItem="ajN-q6-mRC" firstAttribute="trailing" secondItem="RE8-oP-TPh" secondAttribute="trailing" id="nD9-fE-acH"/>
+                            <constraint firstItem="RE8-oP-TPh" firstAttribute="leading" secondItem="ajN-q6-mRC" secondAttribute="leading" id="um0-Tf-nbN"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="7lc-Ye-9md"/>
+                    <connections>
+                        <outlet property="centerCarouselCollectionView" destination="RE8-oP-TPh" id="UCA-rw-T8j"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iNo-Ue-TgC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-972" y="1224"/>
         </scene>
         <!--Banner Carousel View Controller-->
         <scene sceneID="86G-Lj-RUH">
