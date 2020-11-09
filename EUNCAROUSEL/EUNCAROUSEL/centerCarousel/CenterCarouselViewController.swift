@@ -15,7 +15,11 @@ class CenterCarouselViewController: UIViewController {
 	
 	var cellSize: CGSize = CGSize(width: 200, height: 250)
 	var previousIndex = 0
+	var nowIndex = 0
 	let minimumSpacing:CGFloat = 20
+	
+	var idleTimer : Timer?
+	var timeoutNumber = 0
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -24,6 +28,7 @@ class CenterCarouselViewController: UIViewController {
 		setupCollectionView()
 		
 	}
+	
 	
 	func setupCollectionView() {
 		cellSize.width = (view.frame.width - 2 * minimumSpacing) * 0.5
@@ -80,10 +85,11 @@ class CenterCarouselViewController: UIViewController {
 		
 		if let cell = centerCarouselCollectionView.cellForItem(at: indexPath) {
 			animateZoomforCell(zoomCell: cell)
+			nowIndex = roundedIndex
 		}
 		let beforeIndexPath = IndexPath(item: roundedIndex - 1, section: 0)
 		let afterIndexPath = IndexPath(item: roundedIndex + 1, section: 0)
-
+		
 		if roundedIndex != previousIndex {
 			let preIndexPath = IndexPath(item: previousIndex, section: 0)
 			if let preCell = centerCarouselCollectionView.cellForItem(at: preIndexPath) {
@@ -93,6 +99,7 @@ class CenterCarouselViewController: UIViewController {
 				if roundedIndex < 0 {
 					if let moveCell = self.centerCarouselCollectionView.cellForItem(at: IndexPath(row: 5, section: 0)) {
 						self.animateZoomforCell(zoomCell: moveCell)
+						nowIndex = 5
 					}
 					DispatchQueue.main.async {
 						let lastIndex = IndexPath(row: 5, section: 0)
@@ -104,6 +111,7 @@ class CenterCarouselViewController: UIViewController {
 				if roundedIndex > 5 {
 					if let moveCell = self.centerCarouselCollectionView.cellForItem(at: IndexPath(row: 0, section: 0)) {
 						self.animateZoomforCell(zoomCell: moveCell)
+						nowIndex = 0
 					}
 					DispatchQueue.main.async {
 						let lastIndex = IndexPath(row: 0, section: 0)
@@ -111,19 +119,52 @@ class CenterCarouselViewController: UIViewController {
 					}
 				}
 			}
-			
+			print(beforeIndexPath, afterIndexPath)
 			if beforeIndexPath.item != preIndexPath.item, let beforeCell = centerCarouselCollectionView.cellForItem(at: beforeIndexPath) {
 				animateZoomforCellremove(zoomCell: beforeCell)
 			}
 			if afterIndexPath.item != preIndexPath.item, let afterCell = centerCarouselCollectionView.cellForItem(at: afterIndexPath) {
 				animateZoomforCellremove(zoomCell: afterCell)
 			}
-	
+			
 		}
 		previousIndex = indexPath.item
 		lastContentOffset = scrollView.contentOffset.x
 	}
-
+	
+	func setTimer() {
+		if let timer = idleTimer {
+			//timer 객체가 nil 이 아닌경우에는 invalid 상태에만 시작한다
+			if !timer.isValid {
+				idleTimer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(timerCallback), userInfo: nil, repeats: true)
+			}
+		}else{
+			idleTimer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(timerCallback), userInfo: nil, repeats: true)
+		}
+		
+	}
+	
+	func resetTimer() {
+		if let timer = idleTimer {
+			if(timer.isValid){
+				timer.invalidate()
+			}
+		}
+		timeoutNumber = 0
+	}
+	
+	@objc func timerCallback() {
+		timeoutNumber += 1
+		if timeoutNumber >= 2 {
+			nowIndex += 1
+			if nowIndex > 5 {
+				nowIndex = 0
+			}
+			print(nowIndex)
+			let nextIndex = IndexPath(row: nowIndex, section: 0)
+			self.centerCarouselCollectionView.scrollToItem(at: nextIndex, at: .right, animated: true)
+		}
+	}
 }
 
 extension CenterCarouselViewController: UICollectionViewDataSource {
@@ -146,7 +187,8 @@ extension CenterCarouselViewController: UICollectionViewDataSource {
 }
 extension CenterCarouselViewController: UICollectionViewDelegate {
 	func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		print("hey")
+		resetTimer()
+		setTimer()
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
