@@ -214,7 +214,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="RE8-oP-TPh">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="RE8-oP-TPh">
                                 <rect key="frame" x="-10" y="323" width="414" height="250"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
@@ -241,20 +241,31 @@
                                     <outlet property="delegate" destination="XsZ-7D-RPT" id="x8s-fc-xOe"/>
                                 </connections>
                             </collectionView>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="Gxz-yO-Iv3">
+                                <rect key="frame" x="145.5" y="583" width="123" height="28"/>
+                                <color key="pageIndicatorTintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="currentPageIndicatorTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <action selector="pageChanged:" destination="XsZ-7D-RPT" eventType="valueChanged" id="hAC-Z9-tRX"/>
+                                </connections>
+                            </pageControl>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ajN-q6-mRC"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="RE8-oP-TPh" firstAttribute="leading" secondItem="ajN-q6-mRC" secondAttribute="leading" id="3Zp-g6-d2P"/>
                             <constraint firstItem="RE8-oP-TPh" firstAttribute="centerY" secondItem="3a9-S6-76D" secondAttribute="centerY" id="9Bo-0f-gpt"/>
+                            <constraint firstItem="Gxz-yO-Iv3" firstAttribute="centerX" secondItem="3a9-S6-76D" secondAttribute="centerX" id="RFe-bC-IFb"/>
                             <constraint firstItem="ajN-q6-mRC" firstAttribute="trailing" secondItem="RE8-oP-TPh" secondAttribute="trailing" id="b8w-hh-K4k"/>
                             <constraint firstItem="ajN-q6-mRC" firstAttribute="trailing" secondItem="RE8-oP-TPh" secondAttribute="trailing" id="nD9-fE-acH"/>
+                            <constraint firstItem="Gxz-yO-Iv3" firstAttribute="top" secondItem="RE8-oP-TPh" secondAttribute="bottom" constant="10" id="tm1-Ty-Rcr"/>
                             <constraint firstItem="RE8-oP-TPh" firstAttribute="leading" secondItem="ajN-q6-mRC" secondAttribute="leading" id="um0-Tf-nbN"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="7lc-Ye-9md"/>
                     <connections>
                         <outlet property="centerCarouselCollectionView" destination="RE8-oP-TPh" id="UCA-rw-T8j"/>
+                        <outlet property="pageControl" destination="Gxz-yO-Iv3" id="3s3-N3-iPo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iNo-Ue-TgC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -9,6 +9,7 @@ import UIKit
 
 class CenterCarouselViewController: UIViewController {
 	
+	@IBOutlet weak var pageControl: UIPageControl!
 	@IBOutlet weak var centerCarouselCollectionView: UICollectionView!
 	
 	var lastContentOffset: CGFloat = 0
@@ -17,6 +18,7 @@ class CenterCarouselViewController: UIViewController {
 	var previousIndex = 0
 	var nowIndex = 0
 	let minimumSpacing:CGFloat = 20
+	let numOfCard = 6
 	
 	var idleTimer : Timer?
 	var timeoutNumber = 0
@@ -26,9 +28,18 @@ class CenterCarouselViewController: UIViewController {
 		cellSize.width = centerCarouselCollectionView.frame.width - 120
 		cellSize.height = centerCarouselCollectionView.frame.height
 		setupCollectionView()
-		
+		setUpPageControl()
 	}
 	
+	@IBAction func pageChanged(_ sender: Any) {
+		nowIndex = pageControl.currentPage
+		scrollToIndex(index: nowIndex)
+	}
+	
+	func setUpPageControl() {
+		pageControl.numberOfPages = numOfCard
+		pageControl.currentPage = 0
+	}
 	
 	func setupCollectionView() {
 		cellSize.width = (view.frame.width - 2 * minimumSpacing) * 0.5
@@ -99,16 +110,16 @@ class CenterCarouselViewController: UIViewController {
 				if roundedIndex < 0 {
 					if let moveCell = self.centerCarouselCollectionView.cellForItem(at: IndexPath(row: 5, section: 0)) {
 						self.animateZoomforCell(zoomCell: moveCell)
-						nowIndex = 5
+						nowIndex = numOfCard - 1
 					}
 					DispatchQueue.main.async {
-						let lastIndex = IndexPath(row: 5, section: 0)
+						let lastIndex = IndexPath(row: self.numOfCard - 1, section: 0)
 						self.centerCarouselCollectionView.scrollToItem(at: lastIndex, at: .right, animated: true)
 					}
 				}
 			}
 			else {
-				if roundedIndex > 5 {
+				if roundedIndex >= numOfCard {
 					if let moveCell = self.centerCarouselCollectionView.cellForItem(at: IndexPath(row: 0, section: 0)) {
 						self.animateZoomforCell(zoomCell: moveCell)
 						nowIndex = 0
@@ -119,7 +130,6 @@ class CenterCarouselViewController: UIViewController {
 					}
 				}
 			}
-			print(beforeIndexPath, afterIndexPath)
 			if beforeIndexPath.item != preIndexPath.item, let beforeCell = centerCarouselCollectionView.cellForItem(at: beforeIndexPath) {
 				animateZoomforCellremove(zoomCell: beforeCell)
 			}
@@ -130,6 +140,7 @@ class CenterCarouselViewController: UIViewController {
 		}
 		previousIndex = indexPath.item
 		lastContentOffset = scrollView.contentOffset.x
+		pageControl.currentPage = nowIndex
 	}
 	
 	func setTimer() {
@@ -155,21 +166,26 @@ class CenterCarouselViewController: UIViewController {
 	
 	@objc func timerCallback() {
 		timeoutNumber += 1
-		if timeoutNumber >= 2 {
+		print(timeoutNumber)
+		if timeoutNumber == 2 || timeoutNumber == 4 {
 			nowIndex += 1
-			if nowIndex > 5 {
+			if nowIndex >= numOfCard {
 				nowIndex = 0
 			}
-			print(nowIndex)
-			let nextIndex = IndexPath(row: nowIndex, section: 0)
-			self.centerCarouselCollectionView.scrollToItem(at: nextIndex, at: .right, animated: true)
+			scrollToIndex(index: nowIndex)
 		}
+	}
+	
+	func scrollToIndex(index: Int) {
+		let toIndex = IndexPath(row: index, section: 0)
+		self.centerCarouselCollectionView.scrollToItem(at: toIndex, at: .right, animated: true)
+		pageControl.currentPage = index
 	}
 }
 
 extension CenterCarouselViewController: UICollectionViewDataSource {
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return 6
+		return numOfCard
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
