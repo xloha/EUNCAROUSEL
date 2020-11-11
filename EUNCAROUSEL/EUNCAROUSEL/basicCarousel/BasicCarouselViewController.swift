@@ -12,6 +12,7 @@ class BasicCarouselViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
     let cellSize = CGSize(width: 300, height: 200)
+    let insetSize: CGFloat = 10
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,12 +41,12 @@ extension BasicCarouselViewController: UICollectionViewDataSource {
 
 extension BasicCarouselViewController: UIScrollViewDelegate {
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        let cellWithSpacingWidth =  cellSize.width
+        let cellWithSpacingWidth =  cellSize.width + insetSize
         var offset = targetContentOffset.pointee
         let index = (offset.x + scrollView.contentInset.left) / cellWithSpacingWidth
         let roundedIndex: CGFloat = round(index)
 
-        offset = CGPoint(x: roundedIndex * cellWithSpacingWidth - scrollView.contentInset.left, y: scrollView.contentInset.top)
+        offset = CGPoint(x: roundedIndex * cellWithSpacingWidth - (scrollView.contentInset.left + insetSize), y: scrollView.contentInset.top)
         targetContentOffset.pointee = offset
     }
 }
