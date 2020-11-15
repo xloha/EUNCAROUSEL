@@ -108,7 +108,7 @@ class CenterCarouselViewController: UIViewController {
 			}
 			if lastContentOffset > scrollView.contentOffset.x { // move left
 				if roundedIndex < 0 {
-					if let moveCell = self.centerCarouselCollectionView.cellForItem(at: IndexPath(row: 5, section: 0)) {
+					if let moveCell = self.centerCarouselCollectionView.cellForItem(at: IndexPath(row: self.numOfCard - 1, section: 0)) {
 						self.animateZoomforCell(zoomCell: moveCell)
 						nowIndex = numOfCard - 1
 					}
