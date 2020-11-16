@@ -16,6 +16,7 @@
 		2802393C254A4BBE0013921C /* InsetCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2802393B254A4BBE0013921C /* InsetCollectionViewController.swift */; };
 		2802393F254A4C2F0013921C /* ColorImg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2802393E254A4C2F0013921C /* ColorImg.swift */; };
 		28BCEA5825511EF500FD5892 /* BannerCarouselViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BCEA5725511EF500FD5892 /* BannerCarouselViewController.swift */; };
+		2ACA83F32552457200925037 /* CenterCarouselViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACA83F22552457200925037 /* CenterCarouselViewController.swift */; };
 		28BCEA6125537E9C00FD5892 /* BasicCarouselViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BCEA6025537E9C00FD5892 /* BasicCarouselViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -31,6 +32,7 @@
 		2802393B254A4BBE0013921C /* InsetCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsetCollectionViewController.swift; sourceTree = "<group>"; };
 		2802393E254A4C2F0013921C /* ColorImg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorImg.swift; sourceTree = "<group>"; };
 		28BCEA5725511EF500FD5892 /* BannerCarouselViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerCarouselViewController.swift; sourceTree = "<group>"; };
+		2ACA83F22552457200925037 /* CenterCarouselViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterCarouselViewController.swift; sourceTree = "<group>"; };
 		28BCEA6025537E9C00FD5892 /* BasicCarouselViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicCarouselViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -64,6 +66,7 @@
 		2802391B254A41C70013921C /* EUNCAROUSEL */ = {
 			isa = PBXGroup;
 			children = (
+				2ACA83E325523D6100925037 /* centerCarousel */,
 				28BCEA5F25537AC800FD5892 /* basicCarousel */,
 				28BCEA4C2551114D00FD5892 /* bannerCarousel */,
 				28023932254A464D0013921C /* insetCarousel */,
@@ -93,6 +96,14 @@
 				28BCEA5725511EF500FD5892 /* BannerCarouselViewController.swift */,
 			);
 			path = bannerCarousel;
+			sourceTree = "<group>";
+		};
+		2ACA83E325523D6100925037 /* centerCarousel */ = {
+			isa = PBXGroup;
+			children = (
+				2ACA83F22552457200925037 /* CenterCarouselViewController.swift */,
+			);
+			path = centerCarousel;
 			sourceTree = "<group>";
 		};
 		28BCEA5F25537AC800FD5892 /* basicCarousel */ = {
@@ -174,6 +185,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2802393C254A4BBE0013921C /* InsetCollectionViewController.swift in Sources */,
+				2ACA83F32552457200925037 /* CenterCarouselViewController.swift in Sources */,
 				2802393F254A4C2F0013921C /* ColorImg.swift in Sources */,
 				2802391D254A41C70013921C /* AppDelegate.swift in Sources */,
 				2802391F254A41C70013921C /* SceneDelegate.swift in Sources */,
