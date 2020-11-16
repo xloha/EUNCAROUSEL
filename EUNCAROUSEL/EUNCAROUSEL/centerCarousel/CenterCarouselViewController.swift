@@ -22,6 +22,7 @@ class CenterCarouselViewController: UIViewController {
 	
 	var idleTimer : Timer?
 	var timeoutNumber = 0
+	let timeLimit = 3
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -166,8 +167,7 @@ class CenterCarouselViewController: UIViewController {
 	
 	@objc func timerCallback() {
 		timeoutNumber += 1
-		print(timeoutNumber)
-		if timeoutNumber == 2 || timeoutNumber == 4 {
+		if timeoutNumber == timeLimit - 1 || timeoutNumber == timeLimit + 1 {
 			nowIndex += 1
 			if nowIndex >= numOfCard {
 				nowIndex = 0
@@ -203,6 +203,7 @@ extension CenterCarouselViewController: UICollectionViewDataSource {
 }
 extension CenterCarouselViewController: UICollectionViewDelegate {
 	func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+		/**카드가 새로 만들어지면 타이머를 재시작한다.*/
 		resetTimer()
 		setTimer()
 	}
