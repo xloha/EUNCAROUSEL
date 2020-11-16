@@ -273,7 +273,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iNo-Ue-TgC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-972" y="1224"/>
+            <point key="canvasLocation" x="-1681" y="1217"/>
         </scene>
         <!--Banner Carousel View Controller-->
         <scene sceneID="86G-Lj-RUH">
