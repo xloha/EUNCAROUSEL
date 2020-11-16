@@ -104,6 +104,8 @@
 				2ACA83F22552457200925037 /* CenterCarouselViewController.swift */,
 			);
 			path = centerCarousel;
+			sourceTree = "<group>";
+		};
 		28BCEA5F25537AC800FD5892 /* basicCarousel */ = {
 			isa = PBXGroup;
 			children = (
