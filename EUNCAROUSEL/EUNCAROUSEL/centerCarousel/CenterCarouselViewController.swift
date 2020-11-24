@@ -59,7 +59,6 @@ class CenterCarouselViewController: UIViewController {
 			options: .curveEaseOut,
 			animations: {
 				zoomCell.transform = .identity
-				
 			},
 			completion: nil
 		)
@@ -102,12 +101,15 @@ class CenterCarouselViewController: UIViewController {
 		let beforeIndexPath = IndexPath(item: roundedIndex - 1, section: 0)
 		let afterIndexPath = IndexPath(item: roundedIndex + 1, section: 0)
 		
+
 		if roundedIndex != previousIndex {
 			let preIndexPath = IndexPath(item: previousIndex, section: 0)
 			if let preCell = centerCarouselCollectionView.cellForItem(at: preIndexPath) {
 				animateZoomforCellremove(zoomCell: preCell)
 			}
-			if lastContentOffset > scrollView.contentOffset.x { // move left
+		/** 무한 스크롤 구현*/
+			//Scroll to Left
+			if lastContentOffset > scrollView.contentOffset.x {
 				if roundedIndex < 0 {
 					if let moveCell = self.centerCarouselCollectionView.cellForItem(at: IndexPath(row: self.numOfCard - 1, section: 0)) {
 						self.animateZoomforCell(zoomCell: moveCell)
@@ -119,6 +121,7 @@ class CenterCarouselViewController: UIViewController {
 					}
 				}
 			}
+			//Scroll to Right
 			else {
 				if roundedIndex >= numOfCard {
 					if let moveCell = self.centerCarouselCollectionView.cellForItem(at: IndexPath(row: 0, section: 0)) {
@@ -191,15 +194,13 @@ extension CenterCarouselViewController: UICollectionViewDataSource {
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "centerCollectionViewCell", for: indexPath)
 		cell.backgroundColor = UIColor.blue
-		if indexPath.row != 0 {
-			cell.transform =  CGAffineTransform(scaleX: 0.8, y: 0.8)
+		if indexPath.row != 0{
+			DispatchQueue.main.async {
+				cell.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+			}
 		}
 		return cell
 	}
-	
-	
-	
-	
 }
 extension CenterCarouselViewController: UICollectionViewDelegate {
 	func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
