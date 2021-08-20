@@ -10,20 +10,59 @@ import UIKit
 class BasicCarouselViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
-    
-    let cellSize = CGSize(width: 300, height: 200)
+	
+	// Page Controller
+	@IBOutlet weak var backgroundLinearView: UIView!
+	@IBOutlet weak var foregroundLinearView: UIView!
+	
+	let cellSize = CGSize(width: 300, height: 200)
     let insetSize: CGFloat = 10
     let lineSpacing: CGFloat = 10
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCollectionView()
-    }
+	}
+	
+	override func viewDidLayoutSubviews() {
+		setLinearPageController()
+	}
     
     func configureCollectionView() {
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.decelerationRate = .fast
     }
+	
+	// LinearPageController의 초기세팅
+	func setLinearPageController() {
+		let backgroundLinearViewWidth = backgroundLinearView.frame.size.width
+		let foregroundLinearViewWidth = backgroundLinearViewWidth / CGFloat(ColorImg.colorList.count)
+		foregroundLinearView.frame.size.width = foregroundLinearViewWidth
+		
+		NSLayoutConstraint.deactivate(foregroundLinearView.constraints)
+		self.foregroundLinearView.translatesAutoresizingMaskIntoConstraints = false
+		let constraints = [
+			foregroundLinearView.heightAnchor.constraint(equalTo: backgroundLinearView.heightAnchor, multiplier: 1.0),
+			foregroundLinearView.widthAnchor.constraint(equalToConstant: foregroundLinearViewWidth),
+			foregroundLinearView.leadingAnchor.constraint(equalTo: backgroundLinearView.leadingAnchor),
+			foregroundLinearView.topAnchor.constraint(equalTo: backgroundLinearView.topAnchor)
+		]
+		NSLayoutConstraint.activate(constraints)
+	}
+	
+	// pageController의 currentPage
+	var currentPage: Int = 0 {
+		didSet {
+			updateView()
+		}
+	}
+	
+	func updateView() {
+		UIView.animate(withDuration: 0.3, animations: {
+			let moveRight = CGAffineTransform(translationX: self.foregroundLinearView.bounds.width * CGFloat(self.currentPage), y: 0.0)
+			self.foregroundLinearView.transform = moveRight
+		})
+	}
 }
 
 extension BasicCarouselViewController: UICollectionViewDataSource {
@@ -50,5 +89,8 @@ extension BasicCarouselViewController: UIScrollViewDelegate {
 
         offset = CGPoint(x: roundedIndex * cellWithSpacingWidth - (scrollView.contentInset.left + lineSpacing + insetSize), y: scrollView.contentInset.top)
         targetContentOffset.pointee = offset
+		
+		// PageController 를 호출하면 됨
+		currentPage = Int(roundedIndex)
     }
 }
